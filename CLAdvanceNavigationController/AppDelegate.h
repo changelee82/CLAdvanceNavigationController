@@ -8,14 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class CLAdvanceNavigationController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
 /**  全局导航栏 */
-@property (strong, nonatomic) CLAdvanceNavigationController *navController;
+@property (strong, nonatomic) UINavigationController *navController;
 
 @end
 

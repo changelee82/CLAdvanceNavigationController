@@ -7,6 +7,7 @@
 //
 
 #import "FirstViewController.h"
+#import "UINavigationController+Advance.h"
 #import "SecondViewController.h"
 
 @interface FirstViewController ()
@@ -35,7 +36,7 @@
 - (IBAction)testButtonClick:(UIButton *)sender
 {
     SecondViewController *secondVC = [[SecondViewController alloc] init];
-    [self.navigationController pushViewController:secondVC animated:YES];
+    [self.navigationController pushAdvanceViewController:secondVC animated:YES];
     
 }
 @end

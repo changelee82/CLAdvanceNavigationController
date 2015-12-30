@@ -1,197 +1,193 @@
 //
-//  CLAdvanceNavigationController.m
+//  UINavigationController+Advance.m
 //  CLAdvanceNavigationController
 //
-//  Created by 李辉 on 15/12/24.
+//  Created by 李辉 on 15/12/30.
 //  Copyright © 2015年 李辉. All rights reserved.
 //  https://github.com/changelee82/CLAdvanceNavigationController
 //
 
-#import "CLAdvanceNavigationController.h"
+#import "UINavigationController+Advance.h"
 
-/** 动画持续时长 */
+/**  动画持续时长 */
 static const CGFloat kAnimationDuration = 0.5f;
 
-
-@interface CLAdvanceNavigationController ()
-
-/** 黑色背景视图 */
-@property (nonatomic, strong) UIView *backgroundView;
-/** 跳转前视图截图 */
-@property (nonatomic, strong) UIImageView *sourceImageView;
-/** 跳转后视图截图 */
-@property (nonatomic, strong) UIImageView *destinationImageView;
-
-@end
+/**  背景图片tag */
+static const NSInteger kBackgroundViewTag = 10028;
 
 
 
-@implementation CLAdvanceNavigationController
 
-/** 拥有动画效果的push页面操作 */
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
+@implementation UINavigationController (Advance)
+
+/**  拥有前进动画效果的push页面操作 */
+- (void)pushAdvanceViewController:(nullable UIViewController *)viewController animated:(BOOL)animated
 {
     if (animated == NO)
     {
-        [super pushViewController:viewController animated:NO];
+        [self pushViewController:viewController animated:NO];
         return;
     }
     
     if (self.viewControllers.count > 0)
     {
         // 获取跳转前视图截图，切换视图后，再获取跳转后视图截图
-        _sourceImageView = [self.class screenshot];
-        [super pushViewController:viewController animated:NO];
-        _destinationImageView = [self.class screenshot];
+        UIImageView *sourceImageView = [self.class screenshot];
+        [self pushViewController:viewController animated:NO];
+        UIImageView *destinationImageView = [self.class screenshot];
         
         // 添加黑色背景
-        _backgroundView = [[UIView alloc] initWithFrame:_sourceImageView.bounds];
-        _backgroundView.backgroundColor = [UIColor blackColor];
-        [self.view addSubview:_backgroundView];
+        UIView *backgroundView = [[UIView alloc] initWithFrame:sourceImageView.bounds];
+        backgroundView.backgroundColor = [UIColor blackColor];
+        backgroundView.tag = kBackgroundViewTag;
+        [self.view addSubview:backgroundView];
         
         // 添加跳转后视图截图到背景，并初始化
-        _destinationImageView.layer.opacity = 0.5;
-        _destinationImageView.layer.transform = [self backTransform3D];
-        [_backgroundView addSubview:_destinationImageView];
+        destinationImageView.layer.opacity = 0.5;
+        destinationImageView.layer.transform = [self backTransform3D];
+        [backgroundView addSubview:destinationImageView];
         
         // 添加跳转前视图截图到背景，并初始化状态
-        _sourceImageView.layer.opacity = 1.0;
-        _sourceImageView.layer.transform = [self centerTransform3D];
-        [_backgroundView addSubview:_sourceImageView];
+        sourceImageView.layer.opacity = 1.0;
+        sourceImageView.layer.transform = [self centerTransform3D];
+        [backgroundView addSubview:sourceImageView];
         
         // 执行动画
-        [_sourceImageView.layer addAnimation:[self viewMoveFront] forKey:nil];
-        [_destinationImageView.layer addAnimation:[self viewMoveCenter] forKey:nil];
+        [sourceImageView.layer addAnimation:[self viewMoveFront] forKey:nil];
+        [destinationImageView.layer addAnimation:[self viewMoveCenter] forKey:nil];
     }
     else
     {
-        [super pushViewController:viewController animated:YES];
+        [self pushViewController:viewController animated:YES];
     }
 }
 
-/** 拥有动画效果的pop页面操作 */
-- (nullable UIViewController *)popViewControllerAnimated:(BOOL)animated
+/**  拥有前进动画效果的pop页面操作 */
+- (nullable UIViewController *)popAdvanceViewControllerAnimated:(BOOL)animated
 {
     if (animated == NO)
     {
-        return [super popViewControllerAnimated:NO];
+        return [self popViewControllerAnimated:NO];
     }
     
     if (self.viewControllers.count > 1)
     {
         // 获取跳转前视图截图，切换视图后，再获取跳转后视图截图
-        _sourceImageView = [self.class screenshot];
-        UIViewController *result = [super popViewControllerAnimated:NO];
-        _destinationImageView = [self.class screenshot];
+        UIImageView *sourceImageView = [self.class screenshot];
+        UIViewController *result = [self popViewControllerAnimated:NO];
+        UIImageView *destinationImageView = [self.class screenshot];
         
         // 添加黑色背景
-        _backgroundView = [[UIView alloc] initWithFrame:_sourceImageView.bounds];
-        _backgroundView.backgroundColor = [UIColor blackColor];
-        [self.view addSubview:_backgroundView];
+        UIView *backgroundView = [[UIView alloc] initWithFrame:sourceImageView.bounds];
+        backgroundView.backgroundColor = [UIColor blackColor];
+        backgroundView.tag = kBackgroundViewTag;
+        [self.view addSubview:backgroundView];
         
         // 添加跳转前视图截图到背景
-        _sourceImageView.layer.opacity = 1.0;
-        _sourceImageView.layer.transform = [self centerTransform3D];
-        [_backgroundView addSubview:_sourceImageView];
+        sourceImageView.layer.opacity = 1.0;
+        sourceImageView.layer.transform = [self centerTransform3D];
+        [backgroundView addSubview:sourceImageView];
         
         // 添加跳转后视图截图到背景
-        _destinationImageView.layer.opacity = 0.0;
-        _destinationImageView.layer.transform = [self frontTransform3D];
-        [_backgroundView addSubview:_destinationImageView];
+        destinationImageView.layer.opacity = 0.0;
+        destinationImageView.layer.transform = [self frontTransform3D];
+        [backgroundView addSubview:destinationImageView];
         
         // 执行动画
-        [_sourceImageView.layer addAnimation:[self viewMoveBack] forKey:nil];
-        [_destinationImageView.layer addAnimation:[self viewMoveCenter] forKey:nil];
+        [sourceImageView.layer addAnimation:[self viewMoveBack] forKey:nil];
+        [destinationImageView.layer addAnimation:[self viewMoveCenter] forKey:nil];
         
         return result;
     }
     else
     {
-        return [super popViewControllerAnimated:YES];
+        return [self popViewControllerAnimated:YES];
     }
 }
 
-/** 拥有动画效果的popToRoot页面操作 */
-- (nullable NSArray<__kindof UIViewController *> *)popToRootViewControllerAnimated:(BOOL)animated;
+/**  拥有前进动画效果的popToRoot页面操作 */
+- (nullable NSArray<__kindof UIViewController *> *)popAdvanceToRootViewControllerAnimated:(BOOL)animated;
 {
     if (animated == NO)
     {
-        return [super popToRootViewControllerAnimated:NO];
+        return [self popToRootViewControllerAnimated:NO];
     }
     
     if (self.viewControllers.count > 1)
     {
         // 获取跳转前视图截图，切换视图后，再获取跳转后视图截图
-        _sourceImageView = [self.class screenshot];
-        NSArray *result = [super popToRootViewControllerAnimated:NO];
-        _destinationImageView = [self.class screenshot];
+        UIImageView *sourceImageView = [self.class screenshot];
+        NSArray *result = [self popToRootViewControllerAnimated:NO];
+        UIImageView *destinationImageView = [self.class screenshot];
         
         // 添加黑色背景
-        _backgroundView = [[UIView alloc] initWithFrame:_sourceImageView.bounds];
-        _backgroundView.backgroundColor = [UIColor blackColor];
-        [self.view addSubview:_backgroundView];
+        UIView *backgroundView = [[UIView alloc] initWithFrame:sourceImageView.bounds];
+        backgroundView.backgroundColor = [UIColor blackColor];
+        backgroundView.tag = kBackgroundViewTag;
+        [self.view addSubview:backgroundView];
         
         // 添加跳转前视图截图到背景
-        _sourceImageView.layer.opacity = 1.0;
-        _sourceImageView.layer.transform = [self centerTransform3D];
-        [_backgroundView addSubview:_sourceImageView];
+        sourceImageView.layer.opacity = 1.0;
+        sourceImageView.layer.transform = [self centerTransform3D];
+        [backgroundView addSubview:sourceImageView];
         
         // 添加跳转后视图截图到背景
-        _destinationImageView.layer.opacity = 0.0;
-        _destinationImageView.layer.transform = [self frontTransform3D];
-        [_backgroundView addSubview:_destinationImageView];
+        destinationImageView.layer.opacity = 0.0;
+        destinationImageView.layer.transform = [self frontTransform3D];
+        [backgroundView addSubview:destinationImageView];
         
         // 执行动画
-        [_sourceImageView.layer addAnimation:[self viewMoveBack] forKey:nil];
-        [_destinationImageView.layer addAnimation:[self viewMoveCenter] forKey:nil];
+        [sourceImageView.layer addAnimation:[self viewMoveBack] forKey:nil];
+        [destinationImageView.layer addAnimation:[self viewMoveCenter] forKey:nil];
         
         return result;
     }
     else
     {
-        return [super popToRootViewControllerAnimated:YES];
+        return [self popToRootViewControllerAnimated:YES];
     }
 }
 
-/** 拥有动画效果的popToViewController页面操作 */
-- (nullable NSArray<__kindof UIViewController *> *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated
+/** 拥有前进动画效果的popToViewController页面操作 */
+- (nullable NSArray<__kindof UIViewController *> *)popAdvanceToViewController:(nullable UIViewController *)viewController animated:(BOOL)animated
 {
     if (animated == NO)
     {
-        return [super popToViewController:viewController animated:NO];
+        return [self popToViewController:viewController animated:NO];
     }
     
     if (self.viewControllers.count > 1)
     {
         // 获取跳转前视图截图，切换视图后，再获取跳转后视图截图
-        _sourceImageView = [self.class screenshot];
-        NSArray *result = [super popToViewController:viewController animated:NO];
-        _destinationImageView = [self.class screenshot];
+        UIImageView *sourceImageView = [self.class screenshot];
+        NSArray *result = [self popToViewController:viewController animated:NO];
+        UIImageView *destinationImageView = [self.class screenshot];
         
         // 添加黑色背景
-        _backgroundView = [[UIView alloc] initWithFrame:_sourceImageView.bounds];
-        _backgroundView.backgroundColor = [UIColor blackColor];
-        [self.view addSubview:_backgroundView];
+        UIView *backgroundView = [[UIView alloc] initWithFrame:sourceImageView.bounds];
+        backgroundView.backgroundColor = [UIColor blackColor];
+        backgroundView.tag = kBackgroundViewTag;
+        [self.view addSubview:backgroundView];
         
         // 添加跳转前视图截图到背景
-        _sourceImageView.layer.opacity = 1.0;
-        _sourceImageView.layer.transform = [self centerTransform3D];
-        [_backgroundView addSubview:_sourceImageView];
+        sourceImageView.layer.opacity = 1.0;
+        sourceImageView.layer.transform = [self centerTransform3D];
+        [backgroundView addSubview:sourceImageView];
         
         // 添加跳转后视图截图到背景
-        _destinationImageView.layer.opacity = 0.0;
-        _destinationImageView.layer.transform = [self frontTransform3D];
-        [_backgroundView addSubview:_destinationImageView];
+        destinationImageView.layer.opacity = 0.0;
+        destinationImageView.layer.transform = [self frontTransform3D];
+        [backgroundView addSubview:destinationImageView];
         
         // 执行动画
-        [_sourceImageView.layer addAnimation:[self viewMoveBack] forKey:nil];
-        [_destinationImageView.layer addAnimation:[self viewMoveCenter] forKey:nil];
+        [sourceImageView.layer addAnimation:[self viewMoveBack] forKey:nil];
+        [destinationImageView.layer addAnimation:[self viewMoveCenter] forKey:nil];
         
         return result;
     }
     else
     {
-        return [super popToViewController:viewController animated:YES];
+        return [self popToViewController:viewController animated:YES];
     }
 }
 
@@ -202,7 +198,7 @@ static const CGFloat kAnimationDuration = 0.5f;
 {
     CATransform3D t = CATransform3DIdentity;
     t.m34 = 1.0 / -900;    // 透视效果，近大远小
-    t = CATransform3DScale(t, 0.50, 0.50, 1);
+    t = CATransform3DScale(t, 0.20, 0.20, 1);
     t = CATransform3DRotate(t, 15.0f * M_PI/180.0f, 1, 0, 0);
     return t;
 }
@@ -218,7 +214,7 @@ static const CGFloat kAnimationDuration = 0.5f;
 {
     CATransform3D t = CATransform3DIdentity;
     t.m34 = 1.0 / 900;    // 透视效果，近大远小
-    t = CATransform3DScale(t, 2.50, 2.50, 1);
+    t = CATransform3DScale(t, 3.50, 3.50, 1);
     t = CATransform3DRotate(t, -15.0f * M_PI/180.0f, 1, 0, 0);
     return t;
 }
@@ -316,23 +312,18 @@ static const CGFloat kAnimationDuration = 0.5f;
 /** 动画结束的委托事件 */
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
-    if (_backgroundView)
+    NSArray *subviews = [self.view subviews];
+    for (UIView *view in subviews)
     {
-        [_backgroundView removeFromSuperview];
-        _backgroundView = nil;
+        if(view.tag == kBackgroundViewTag)
+        {
+            [view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+            [view removeFromSuperview];
+        }
+        
     }
     
-    if (_sourceImageView)
-    {
-        [_sourceImageView removeFromSuperview];
-        _sourceImageView = nil;
-    }
-    
-    if (_destinationImageView)
-    {
-        [_destinationImageView removeFromSuperview];
-        _destinationImageView = nil;
-    }
+
 }
 
 

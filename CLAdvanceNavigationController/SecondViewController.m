@@ -7,6 +7,7 @@
 //
 
 #import "SecondViewController.h"
+#import "UINavigationController+Advance.h"
 #import "ThridViewController.h"
 
 @interface SecondViewController ()
@@ -35,12 +36,12 @@
 - (IBAction)pushButtonClick:(UIButton *)sender
 {
     ThridViewController *thridVC = [[ThridViewController alloc] init];
-    [self.navigationController pushViewController:thridVC animated:YES];
+    [self.navigationController pushAdvanceViewController:thridVC animated:YES];
 }
 
 - (IBAction)popButtonClick:(UIButton *)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popAdvanceViewControllerAnimated:YES];
 }
 
 @end

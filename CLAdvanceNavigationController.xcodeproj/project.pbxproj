@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9CA1D9991C333B820019E1BA /* UINavigationController+Advance.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CA1D9981C333B820019E1BA /* UINavigationController+Advance.m */; };
 		9CFCBDD71C2C0A440021D52A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCBDD61C2C0A440021D52A /* main.m */; };
 		9CFCBDDA1C2C0A440021D52A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCBDD91C2C0A440021D52A /* AppDelegate.m */; };
 		9CFCBDE01C2C0A440021D52A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CFCBDDE1C2C0A440021D52A /* Main.storyboard */; };
 		9CFCBDE21C2C0A440021D52A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CFCBDE11C2C0A440021D52A /* Assets.xcassets */; };
 		9CFCBDE51C2C0A440021D52A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CFCBDE31C2C0A440021D52A /* LaunchScreen.storyboard */; };
-		9CFCBDEF1C2C0A5F0021D52A /* CLAdvanceNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCBDEE1C2C0A5F0021D52A /* CLAdvanceNavigationController.m */; };
 		9CFCBDF41C2C0E460021D52A /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCBDF21C2C0E460021D52A /* FirstViewController.m */; };
 		9CFCBDF51C2C0E460021D52A /* FirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CFCBDF31C2C0E460021D52A /* FirstViewController.xib */; };
 		9CFCBDF91C2C0F790021D52A /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCBDF71C2C0F790021D52A /* SecondViewController.m */; };
@@ -22,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9CA1D9971C333B820019E1BA /* UINavigationController+Advance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+Advance.h"; path = "CLAdvanceNavigationController/UINavigationController+Advance.h"; sourceTree = "<group>"; };
+		9CA1D9981C333B820019E1BA /* UINavigationController+Advance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+Advance.m"; path = "CLAdvanceNavigationController/UINavigationController+Advance.m"; sourceTree = "<group>"; };
 		9CFCBDD21C2C0A440021D52A /* CLAdvanceNavigationController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CLAdvanceNavigationController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CFCBDD61C2C0A440021D52A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9CFCBDD81C2C0A440021D52A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -30,8 +32,6 @@
 		9CFCBDE11C2C0A440021D52A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9CFCBDE41C2C0A440021D52A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9CFCBDE61C2C0A440021D52A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9CFCBDED1C2C0A5F0021D52A /* CLAdvanceNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAdvanceNavigationController.h; path = CLAdvanceNavigationController/CLAdvanceNavigationController.h; sourceTree = "<group>"; };
-		9CFCBDEE1C2C0A5F0021D52A /* CLAdvanceNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAdvanceNavigationController.m; path = CLAdvanceNavigationController/CLAdvanceNavigationController.m; sourceTree = "<group>"; };
 		9CFCBDF11C2C0E460021D52A /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
 		9CFCBDF21C2C0E460021D52A /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		9CFCBDF31C2C0E460021D52A /* FirstViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstViewController.xib; sourceTree = "<group>"; };
@@ -97,8 +97,8 @@
 		9CFCBDEC1C2C0A4B0021D52A /* CLAdvanceNavigationController */ = {
 			isa = PBXGroup;
 			children = (
-				9CFCBDED1C2C0A5F0021D52A /* CLAdvanceNavigationController.h */,
-				9CFCBDEE1C2C0A5F0021D52A /* CLAdvanceNavigationController.m */,
+				9CA1D9971C333B820019E1BA /* UINavigationController+Advance.h */,
+				9CA1D9981C333B820019E1BA /* UINavigationController+Advance.m */,
 			);
 			name = CLAdvanceNavigationController;
 			sourceTree = "<group>";
@@ -197,8 +197,8 @@
 				9CFCBDF91C2C0F790021D52A /* SecondViewController.m in Sources */,
 				9CFCBDDA1C2C0A440021D52A /* AppDelegate.m in Sources */,
 				9CFCBDD71C2C0A440021D52A /* main.m in Sources */,
-				9CFCBDEF1C2C0A5F0021D52A /* CLAdvanceNavigationController.m in Sources */,
 				9CFCBDF41C2C0E460021D52A /* FirstViewController.m in Sources */,
+				9CA1D9991C333B820019E1BA /* UINavigationController+Advance.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,6 +349,7 @@
 				9CFCBDEB1C2C0A440021D52A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

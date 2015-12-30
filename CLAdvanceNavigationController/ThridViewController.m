@@ -7,6 +7,7 @@
 //
 
 #import "ThridViewController.h"
+#import "UINavigationController+Advance.h"
 
 @interface ThridViewController ()
 
@@ -34,12 +35,12 @@
 
 - (IBAction)rootButtonClick:(UIButton *)sender
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popAdvanceToRootViewControllerAnimated:YES];
 }
 
 - (IBAction)popButtonClick:(UIButton *)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popAdvanceViewControllerAnimated:YES];
 }
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "CLAdvanceNavigationController.h"
 #import "FirstViewController.h"
 
 
@@ -26,7 +25,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     // 创建并设置全局导航栏为window的根视图
-    self.navController = [[CLAdvanceNavigationController alloc] init];
+    self.navController = [[UINavigationController alloc] init];
     self.window.rootViewController = self.navController;
     
     // 设置导航栏首页
