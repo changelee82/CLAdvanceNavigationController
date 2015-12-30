@@ -16,9 +16,8 @@
 ===============
 
     在 AppDelegate.h 中声明全局导航栏
-    @class CLAdvanceNavigationController;
     /**  全局导航栏 */
-    @property (strong, nonatomic) CLAdvanceNavigationController *navController;
+    @property (strong, nonatomic) UINavigationController *navController;
     
     在 AppDelegate.m 中初始化全局导航栏
     - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -28,7 +27,7 @@
         self.window.backgroundColor = [UIColor whiteColor];
         
         // 创建并设置全局导航栏为window的根视图
-        self.navController = [[CLAdvanceNavigationController alloc] init];
+        self.navController = [[UINavigationController alloc] init];
         self.window.rootViewController = self.navController;
         
         // 设置导航栏首页
@@ -38,13 +37,16 @@
         return YES;
     }
     
-    在做页面切换时，使用正常使用导航栏代码
+    在做页面切换时，导入头文件
+    #import "UINavigationController+Advance.h"
+    
+    使用下列代码切换页面
     ThridViewController *thridVC = [[ThridViewController alloc] init];
-    [self.navigationController pushViewController:thridVC animated:YES];
+    [self.navigationController pushAdvanceViewController:thridVC animated:YES];
     
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popAdvanceViewControllerAnimated:YES];
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popAdvanceToRootViewControllerAnimated:YES];
 
 
 
@@ -52,6 +54,10 @@
 
 历史版本
 ===============
+v1.1 - 2015-12-30 <br />
+Added <br />
+放弃继承，使用类别 <br />
+
 v1.0 - 2015-12-24 <br />
 Added <br />
 基础功能完成 <br />
